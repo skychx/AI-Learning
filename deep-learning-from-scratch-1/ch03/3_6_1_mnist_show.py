@@ -13,10 +13,10 @@ def img_show(img):
     pil_img.show()
 
 # (训练图像 , 训练标签)，(测试图像，测试标签)
-# normalize: 是否将输入图像正规化为 0.0~1.0 的值
+# normalize: 是否将输入图像「正则化 (normalization)」为 0.0~1.0 的值
 # flatten: 是否展开输入图像 (变成一维数组)
 # one_hot_label: 是否将标签保存为 one-hot 表示
-(x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize=False)
+(x_train, t_train), (x_test, t_test) = load_mnist(normalize=False, flatten=True)
 
 img = x_train[0]
 label = t_train[0]
