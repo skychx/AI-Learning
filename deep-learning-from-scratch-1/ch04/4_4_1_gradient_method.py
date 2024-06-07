@@ -3,6 +3,8 @@ import importlib
 import numpy as np
 import matplotlib.pylab as plt
 
+# 使用 importlib 动态导入数字开头的文件
+# 并不是很好的办法，只是用数字表示序号更方便一些
 numerical_gradient = importlib.import_module('4_3_3_gradient_2d').numerical_gradient
 
 
