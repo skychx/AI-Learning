@@ -1,9 +1,10 @@
 # coding: utf-8
 import numpy as np
 import matplotlib.pylab as plt
-from mpl_toolkits.mplot3d import Axes3D
 
-
+# 用来求某个函数的偏导
+# f: 要求偏导的函数
+# x: 函数参数列表
 def _numerical_gradient_no_batch(f, x):
     h = 1e-4  # 0.0001
     grad = np.zeros_like(x)
@@ -19,21 +20,22 @@ def _numerical_gradient_no_batch(f, x):
         
         x[idx] = tmp_val # 还原原始值
         
-    return grad
+    return grad # 梯度（gradient）
 
-
+# 求梯度的函数，支持批量
 def numerical_gradient(f, X):
     if X.ndim == 1:
         return _numerical_gradient_no_batch(f, X)
     else:
         grad = np.zeros_like(X)
         
-        for idx, x in enumerate(X):
-            grad[idx] = _numerical_gradient_no_batch(f, x)
+        for i, x in enumerate(X):
+            grad[i] = _numerical_gradient_no_batch(f, x)
         
         return grad
 
-
+# f = x0^2 + x1^2 + ... + xn^2
+# 这里的 x 是一个数组
 def function_2(x):
     if x.ndim == 1:
         return np.sum(x**2)
@@ -41,25 +43,22 @@ def function_2(x):
         return np.sum(x**2, axis=1)
 
 
-def tangent_line(f, x):
-    d = numerical_gradient(f, x)
-    print(d)
-    y = f(x) - d*x
-    return lambda t: d*t + y
-
-
 if __name__ == '__main__':
     x0 = np.arange(-2, 2.5, 0.25)
     x1 = np.arange(-2, 2.5, 0.25)
-    X, Y = np.meshgrid(x0, x1)
+    X0, X1 = np.meshgrid(x0, x1)
     
-    X = X.flatten()
-    Y = Y.flatten()
+    X0 = X0.flatten()
+    X1 = X1.flatten()
 
-    grad = numerical_gradient(function_2, np.array([X, Y]).T).T
+    # 上面的用法构建出 X0 和 X1 组合起的参数列表
+
+    # 求出在各个 (x0, x1) 点上求出的梯度
+    grad = numerical_gradient(function_2, np.array([X0, X1]).T).T
 
     plt.figure()
-    plt.quiver(X, Y, -grad[0], -grad[1],  angles="xy",color="#666666")
+    # quiver 用来画箭头
+    plt.quiver(X0, X1, -grad[0], -grad[1], angles="xy",color="#666666")
     plt.xlim([-2, 2])
     plt.ylim([-2, 2])
     plt.xlabel('x0')
