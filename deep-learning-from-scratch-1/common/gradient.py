@@ -32,11 +32,20 @@ def numerical_gradient_2d(f, X):
 
 
 def numerical_gradient(f, x):
+    """
+    求某函数的梯度
+
+    param f: 要求梯度的函数
+    param x: f 的入参
+    returns: f 在 x 下的梯度
+    """
+
     h = 1e-4 # 0.0001
     grad = np.zeros_like(x)
     
     it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
     while not it.finished:
+        # 循环体就是求偏导
         idx = it.multi_index
         tmp_val = x[idx]
         x[idx] = tmp_val + h
@@ -49,4 +58,4 @@ def numerical_gradient(f, x):
         x[idx] = tmp_val # 
         it.iternext()
         
-    return grad
+    return grad # 梯度（gradient）
