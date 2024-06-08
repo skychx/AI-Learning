@@ -11,6 +11,10 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
+def sigmoid_grad(x):
+    return (1.0 - sigmoid(x)) * sigmoid(x)
+
+
 def softmax(x):
     """
     分类函数 (3.5.1)，典型特征是输出值总和为 1
