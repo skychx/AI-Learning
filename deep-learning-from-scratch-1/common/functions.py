@@ -23,6 +23,7 @@ def softmax(x):
     returns: 返回一个数组
     """
 
+    # 为防止溢出，各输入信号 统一减去 输入信号中的最大值
     x = x - np.max(x, axis=-1, keepdims=True)
     return np.exp(x) / np.sum(np.exp(x), axis=-1, keepdims=True)
 

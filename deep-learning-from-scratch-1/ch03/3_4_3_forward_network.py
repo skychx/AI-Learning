@@ -37,14 +37,18 @@ def forward(network, x):
     # X: 输入信号，W: 权重，B: 偏置
     # A = X * W + B
     # Z = sigmoid(X * W + B)
+
+    # 隐藏层 1
     a1 = np.dot(x, W1) + b1
     z1 = sigmoid(a1)
 
+    # 隐藏层 2
     a2 = np.dot(z1, W2) + b2
     z2 = sigmoid(a2)
 
+    # 输出层
     a3 = np.dot(z2, W3) + b3
-    y = identity_function(a3) # 
+    y = identity_function(a3) # 此章节还未学习 softmax 函数，所以输出和不为 1
 
     return y
 

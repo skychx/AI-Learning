@@ -30,7 +30,7 @@ def predict(network, x):
     w1, w2, w3 = network['W1'], network['W2'], network['W3']
     b1, b2, b3 = network['b1'], network['b2'], network['b3']
 
-    a1 = np.dot(x, w1) + b1
+    a1 = np.dot(x, w1) + b1 # 批处理不影响最后的结果输出
     z1 = sigmoid(a1)
     a2 = np.dot(z1, w2) + b2
     z2 = sigmoid(a2)

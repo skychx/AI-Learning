@@ -15,12 +15,12 @@ def img_show(img):
 # (训练图像 , 训练标签)，(测试图像，测试标签)
 # normalize: 是否将输入图像「正则化 (normalization)」为 0.0~1.0 的值
 # flatten: 是否展开输入图像 (变成一维数组)
-# one_hot_label: 是否将标签保存为 one-hot 表示
+# one_hot_label: 是否将标签保存为 one-hot 表示（即正确解为 1 其余为 0 的格式）
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=False, flatten=True)
 
 img = x_train[0]
 label = t_train[0]
-print('label:', label) # 5
+print('label:', label) # 5，表示第一个标签是数字 5
 
 print('img shape:', img.shape) # (784,)
 
