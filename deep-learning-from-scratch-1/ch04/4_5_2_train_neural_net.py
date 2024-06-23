@@ -23,12 +23,12 @@ network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 iters_num = 10000 # 步进数，也是循环数
 learning_rate = 0.1 # 步进值
 
-train_size = x_train.shape[0] # 这里有 6000 个数据
+train_size = x_train.shape[0] # 这里有 60000 个数据
 batch_size = 100 # 每次从 60000 个训练数据中随机取出 100 个数据
 
 train_loss_list = []
-train_acc_list = []
-test_acc_list = []
+train_acc_list = [] # 这个是存历史数据画图的
+test_acc_list = []  # 这个是存历史数据画图的
 
 # 平均每个 epoch 的重复次数，这里就是 600
 # 这里粗略的认为每 600 次循环可以遍历完毕所有的测试数据
@@ -36,9 +36,9 @@ iter_per_epoch = max(train_size / batch_size, 1)
 
 
 for i in range(iters_num):
-    print('i:', i, time.time())
+    # print('i:', i, time.time())
     # 获取 mini-batch
-    batch_mask = np.random.choice(train_size, batch_size)
+    batch_mask = np.random.choice(train_size, batch_size) # 注意这里是随机选的
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
     
@@ -55,6 +55,8 @@ for i in range(iters_num):
     train_loss_list.append(loss)
     
     # 计算每个 epoch 的识别精度
+    # 循环总次数为 10000，iter_per_epoch 为 600
+    # 所以每 600 次算一下识别精度
     if i % iter_per_epoch == 0:
         train_acc = network.accuracy(x_train, t_train) # 训练数据的计算精度
         test_acc = network.accuracy(x_test, t_test) # 测试数据的计算精度

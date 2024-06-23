@@ -4,7 +4,7 @@ import sys, os
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir) # 临时把 parent_dir 放在 sys.path 里
 
-from common.functions import *
+from common.functions import sigmoid, sigmoid_grad, softmax, cross_entropy_error
 from common.gradient import numerical_gradient
 import numpy as np
 
@@ -17,11 +17,13 @@ class TwoLayerNet:
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
         # 初始化权重
         self.params = {}
+
         # 权重使用符合「高斯分布」的「随机数」进行初始化
         self.params['W1'] = weight_init_std * np.random.randn(input_size, hidden_size)
+        self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
+
         # 偏置使用 0 进行初始化
         self.params['b1'] = np.zeros(hidden_size)
-        self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
         self.params['b2'] = np.zeros(output_size)
 
     # 推理用的神经网络

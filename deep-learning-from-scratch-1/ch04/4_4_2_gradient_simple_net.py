@@ -14,6 +14,7 @@ class simpleNet:
         self.W = np.random.randn(2,3) # 用高斯分布进行初始化
 
     # 只做了一层网络，复习可参考 3_4_3_forward_network.py
+    # 注意这里为了简化，忽略了偏置 b
     def predict(self, x):
         return np.dot(x, self.W)
 
@@ -26,8 +27,8 @@ class simpleNet:
 
         return loss
 
-x = np.array([0.6, 0.9])
-t = np.array([0, 0, 1])
+x = np.array([0.6, 0.9]) # 输入数据
+t = np.array([0, 0, 1]) # 正确解标签
 
 net = simpleNet()
 

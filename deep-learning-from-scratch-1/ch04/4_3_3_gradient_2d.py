@@ -2,10 +2,14 @@
 import numpy as np
 import matplotlib.pylab as plt
 
-# 用来求某个函数的偏导
-# f: 要求偏导的函数
-# x: 函数参数列表
 def _numerical_gradient_no_batch(f, x):
+    """
+    用来求某个函数的偏导
+
+    param f: 要求偏导的函数
+    param x: 函数参数列表
+    returns: 返回梯度
+    """
     h = 1e-4  # 0.0001
     grad = np.zeros_like(x)
     
@@ -24,6 +28,13 @@ def _numerical_gradient_no_batch(f, x):
 
 # 求梯度的函数，支持批量
 def numerical_gradient(f, X):
+    """
+    用来求某个函数的梯度，支持批量参数
+
+    param f: 要求偏导的函数
+    param X: 函数参数列表 的列表
+    returns: 返回梯度列表
+    """
     if X.ndim == 1:
         return _numerical_gradient_no_batch(f, X)
     else:

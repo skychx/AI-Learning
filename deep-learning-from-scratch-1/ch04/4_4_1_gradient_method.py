@@ -35,6 +35,7 @@ step_num = 20
 # 从 (-3, 4) 开始梯度下降 20 次
 x, x_history = gradient_descent(function_2, init_x, lr=lr, step_num=step_num)
 
+print('x:\n', x)
 print('x_history:\n', x_history)
 
 plt.plot( [-5, 5], [0,0], '--b')
