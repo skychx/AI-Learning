@@ -13,7 +13,7 @@ print('t_train.shape:', t_train.shape) # (60000, 10)
 
 
 train_size = x_train.shape[0]
-batch_size = 5
+batch_size = 10
 
 # 从 60000 个里随机挑选 10 个，这里的 batch_mask 为数组下标
 batch_mask = np.random.choice(train_size, batch_size)
