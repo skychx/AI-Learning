@@ -3,6 +3,7 @@ import numpy as np
 def sigmoid(x):
     """
     sigmoid 激活函数 (3.2.1)，是一条平滑的曲线
+    y = 1 / (1 + e^-x)
 
     param x: 神经网络某一层的输入
     returns: 返回一个数组
