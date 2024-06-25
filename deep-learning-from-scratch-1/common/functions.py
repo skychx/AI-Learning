@@ -34,7 +34,7 @@ def cross_entropy_error(y, t):
     交叉熵误差，损失函数的一种 (4.2.4)
 
     param y: 神经网络的输出
-    param t: 监督数据，注意这里 t 是非 one-shot 场景（标签场景）
+    param t: 监督数据，注意这里 t 是非 one-hot 场景（标签场景）
     returns: 返回一个数字，表示误差
     """
     delta = 1e-7 # 防止 np.log(0) 算出负无穷
@@ -43,20 +43,21 @@ def cross_entropy_error(y, t):
         t = t.reshape(1, t.size)
         y = y.reshape(1, y.size)
 
+    # 如果 监督数据 是 one-hot 向量，则转换为正确标签的索引
     if t.size == y.size:
         t = t.argmax(axis=1)
     
     batch_size = y.shape[0] # y 个数
 
     # 这里的逻辑看起来是针对 mnist 定制的
-    # 如果 t 是 one-shot，那么就可以用 -np.sum(t * np.log(y + 1e-7))
+    # 如果 t 是 one-，那么就可以用 -np.sum(t * np.log(y + 1e-7))
     # 计算过程如下：
     # t = [  0,    0,   1,   0,    0,   0,   0,   0,   0,   0]
     # y = [0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0]
     # 最后其实计算的就是 -ln(0.6)
     #
     # 如果是标签模式，上面的 t 输出的其实是 2
-    # **这个 2 又可以表示数字 2，还可以表示为 one-shot 下的下标 2**
+    # **这个 2 又可以表示数字 2，还可以表示为 one-hot 下的下标 2**
     # 从这里就可以看出，如果 y 给的是一个数组，例如 y.shape = (5, 10)
     # 这时：
     # batch_size = 5;

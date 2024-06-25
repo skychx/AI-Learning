@@ -1,4 +1,6 @@
-from functions import sigmoid
+import numpy as np
+
+from functions import sigmoid, softmax, cross_entropy_error
 
 class Relu:
     """
@@ -50,4 +52,60 @@ class Sigmoid:
         """
         dx = dout * (1.0 - self.out) * self.out
 
+        return dx
+
+
+class Affine:
+    def __init__(self, W, b):
+        self.W = W
+        self.b = b
+
+        self.x = None
+        self.original_x_shape = None # 考虑张量
+
+        self.dW = None
+        self.db = None
+
+    def forward(self, x):
+        self.original_x_shape = x.shape # 考虑张量
+        x = x.reshape(x.shape[0], -1) # 考虑张量
+        self.x = x
+
+        out = np.dot(self.x, self.W) + self.b
+
+        return out
+
+    def backward(self, dout):
+        dx = np.dot(dout, self.W.T)
+
+        self.dW = np.dot(self.x.T, dout)
+        self.db = np.sum(dout, axis=0)
+
+        dx = dx.reshape(*self.original_x_shape) # 考虑张量
+
+        return dx
+
+
+class SoftmaxWithLoss:
+    def __init__(self):
+        self.loss = None # 损失
+        self.y = None    # softmax 的输出
+        self.t = None    # 监督数据 (one-hot vector)
+
+    def forward(self, x, t):
+        self.t = t
+        self.y = softmax(x)
+        self.loss = cross_entropy_error(self.y, self.t)
+        
+        return self.loss
+
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        if self.t.size == self.y.size: # 如果 监督数据 是 one-hot 向量
+            dx = (self.y - self.t) / batch_size
+        else:
+            dx = self.y.copy()
+            dx[np.arange(batch_size), self.t] -= 1
+            dx = dx / batch_size
+        
         return dx
