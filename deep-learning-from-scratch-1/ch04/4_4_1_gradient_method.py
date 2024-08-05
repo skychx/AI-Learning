@@ -8,7 +8,7 @@ import matplotlib.pylab as plt
 numerical_gradient = importlib.import_module('4_3_3_gradient_2d').numerical_gradient
 
 # 梯度下降法 (gradient descent method)
-# 沿着梯度方向步进，识图找到函数的最小值（或相对最小值）
+# 沿着梯度方向步进，试图找到函数的最小值（或相对最小值）
 # lr 这个步进值，就叫 学习率 (learning rate)，过大过小都不行
 # 这种参数就叫「超参数」，是人工设定的，需要试，也就是所谓的「调参」
 def gradient_descent(f, init_x, lr=0.01, step_num=100):

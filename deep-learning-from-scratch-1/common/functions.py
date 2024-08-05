@@ -39,6 +39,8 @@ def cross_entropy_error(y, t):
     """
     delta = 1e-7 # 防止 np.log(0) 算出负无穷
 
+    # 检查数组 y 是否是一维数组，如果是，则将其重新形成为一个二维数组，具有一行和 y 的元素数量相同的列
+    # [1, 2, 3, 4, 5] -> [[1, 2, 3, 4, 5]]
     if y.ndim == 1:
         t = t.reshape(1, t.size)
         y = y.reshape(1, y.size)
@@ -50,7 +52,7 @@ def cross_entropy_error(y, t):
     batch_size = y.shape[0] # y 个数
 
     # 这里的逻辑看起来是针对 mnist 定制的
-    # 如果 t 是 one-，那么就可以用 -np.sum(t * np.log(y + 1e-7))
+    # 如果 t 是 one-hot，那么就可以用 -np.sum(t * np.log(y + 1e-7))
     # 计算过程如下：
     # t = [  0,    0,   1,   0,    0,   0,   0,   0,   0,   0]
     # y = [0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0]
@@ -64,7 +66,11 @@ def cross_entropy_error(y, t):
     # np.arange(batch_size) = [0, 1, 2, 3, 4]
     # t = [2, 7, 0, 9, 4], 表示对应的预测为这几个数字，也可以表示 y[n] 中正确的预测概率下标
     # y[np.arange(batch_size), t] 就表示 [y[0,2], y[1,7], y[2,0], y[3,9], y[4,4]]
-    # 然后算这些单个数字的 交叉熵误差，然后求和，求平均数
+    # 然后求和取反取平均数，计算交叉熵误差
+    #
+    # 注意这里有个 y = lnx 函数的特点，这个函数是个递增函数
+    # x 因为是概率，x <= 1; x 越接近 1，y 越接近 0
+    # 也就是说 x 的概率越大，y 表示的误差越小
     return -np.sum(
         np.log(
             y[np.arange(batch_size), t] + delta
