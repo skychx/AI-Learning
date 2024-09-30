@@ -1,6 +1,6 @@
 import numpy as np
 
-from functions import sigmoid, softmax, cross_entropy_error
+from common.functions import sigmoid, softmax, cross_entropy_error
 
 class Relu:
     """
